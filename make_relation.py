@@ -52,62 +52,42 @@ def base(node):
 #前->後
 
 
-p = 0
-r = ""
-for sentence in sentences:
-    p -= 1
-    sentence = sentence.strip()
-    if(sentence == ""):continue
-    if sentence[0] == '[':
-        p = 2
-        r = sentence.strip('[] ')
-
-    sentence = sentence.split('。')[0]
-    if p == 0:
+pq = 0
+for sentenceses in sentences:
+    if(pq % 1000 == 0):print pq
+    pq += 1
+    for sentence in sentenceses.split('。'):
         node = tagger.parseToNode(sentence)
-        lastes = {}
+        r = []
+
         while node:
-            if(node.feature.split(',')[0] == "名詞" or node.feature.split(',')[0] == "動詞"):
-                lastes[node.feature.split(',')[0]] = base(node)
-            node = node.next
-        r = tagger.parseToNode(r)
-        r = base(r.next)
-        for x in lastes.items():
-            try:
-                add_point((r.surface, r.feature), (x[1].surface, x[1].feature))
-            except:
-                pass
-"""
-for sentence in sentences:
-    node = tagger.parseToNode(sentence)
-    r = []
+            tnode = base(node)
+            if(tnode.feature.split(',')[0] != "名詞" and tnode.feature.split(',')[1] != "自立"):
+                node = node.next
+                continue
 
-    while node:
-        tnode = base(node)
-        if(tnode.feature.split(',')[0] != "名詞" and tnode.feature.split(',')[1] != "自立"):
-            node = node.next
-            continue
-
-        if tnode.surface not in relation:
-            node = node.next
-            continue
+            if tnode.surface not in relation:
+                node = node.next
+                continue
         
-        if tnode.surface in black:
+            if tnode.surface in black:
+                node = node.next
+                continue
+
+            r.append((tnode.surface, tnode.feature))
             node = node.next
-            continue
 
-        r.append((tnode.surface, tnode.feature))
-        node = node.next
+        
 
-    p = len(r)
-    for x in xrange(p):
-        for y in xrange(x + 1, p):
-            try:
-                add_point(r[x], r[y])
-            except:
-                print r[x][0], r[y][0]
+        p = len(r)
+        for x in xrange(p):
+            for y in xrange(x + 1, p):
+                try:
+                    add_point(r[x], r[y])
+                except:
+                    print r[x][0], r[y][1]
             
-"""
+
 print "pya2"
 #A -> A'作成
 for x in word_list:
