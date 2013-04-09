@@ -7,12 +7,12 @@ def make_map():
     f = open("relation.csv", "r")
     for x in f:
         x = x.strip().split(',')
-        relation[x[0]] = x[1:]
+        relation[x[0]] = x[1:10]
 
     f = open("inverse.csv", "r")
     for x in f:
         x = x.strip().split(',')
-        inverse[x[0]] = x[1:]
+        inverse[x[0]] = x[1:10]
     f.close()
 
 def solve(word):
