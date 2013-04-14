@@ -16,26 +16,29 @@ hiragana = {}
 
 
 #指示語への関係や辞書にない言葉からの関係を排除しつつつなぐ
-black = set()
+black = []
 
 for x in blackf:
-    black += [x.strip()]
+    black += [tagger.parseToNode(x.strip()).next.feature.split(',')[-1]]
 
 def add_point(x, y):
     x = x[0].strip().split(',')[0]
     if x not in relation:
         return
-    
     yomi = y[1].strip().split(',')[8]
-    if(y[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):
-        return
+    reals = y[1].strip().split(',')[6]
     y = y[0].strip().split(',')[0]
-    if y in black:
+    if yomi in black:
         return
-    
+
+    if len(yomi) < 9:
+        return
+
+
     if yomi not in relation[x]:
-        relation[x][yomi] = 0
-    relation[x][yomi] += 1
+        relation[x][yomi] = [0, reals]
+
+    relation[x][yomi][0] += 1
 
 for x in words:
     x = x.strip()
@@ -49,46 +52,41 @@ def base(node):
     return tagger.parseToNode(it).next
         
 
+teach = tagger.parseToNode("この文は助詞の例を作るのが目的")
+x = []
+while teach:
+    x.append((teach.surface, teach.feature))
+    teach = teach.next
+WA = x[3]
+WO = x[7]
+GA = x[10]
+
 #文章解析
 #「が」「は」「を」で挟まれた２つをつなぐ
 #前->後
 
+p = 0
 
-pq = 0
 for sentenceses in sentences:
-    if(pq % 1000 == 0):print pq
-    pq += 1
+    p += 1
+    if(p % 1000 == 0):print p
     for sentence in sentenceses.split('。'):
         node = tagger.parseToNode(sentence)
         r = []
 
         while node:
             tnode = base(node)
-            if(tnode.feature.split(',')[0] != "名詞" and tnode.feature.split(',')[1] != "自立"):
-                node = node.next
-                continue
-
-            if tnode.surface not in relation:
-                node = node.next
-                continue
-        
-            if tnode.surface in black:
-                node = node.next
-                continue
-
             r.append((tnode.surface, tnode.feature))
             node = node.next
 
         
-
-        p = len(r)
-        for x in xrange(p):
-            for y in xrange(x + 1, p):
+        for i, word in enumerate(r):
+            if word == WA:
                 try:
-                    add_point(r[x], r[y])
+                    add_point(r[i - 1], r[i + 1])
                 except:
-                    print r[x][0], r[y][1]
-
+                    pass
+            
 
 print "pya2"
 #A -> A'作成
@@ -96,19 +94,20 @@ for x in word_list:
     relation[x] = relation[x].items()
     relation[x].sort(key = lambda x:x[1], reverse = True)
     c = x
-    if len(relation[x][:10]) == 0:continue
-    for z, point in relation[x][:10]:
-        c += ',%s'%z
+    if len(relation[x][:100]) == 0:continue
+    for z, point in relation[x][:100]:
+        c += ',(%s %s)'%(z, point[1])
         if z not in hiragana:
             hiragana[z] = []
-        hiragana[z] += [(poinxt, x)]
+        hiragana[z] += [(point, x)]
     relations.write(c + '\n')
 print "here"
+
 #A' -> A作成
 for x in hiragana:
     hiragana[x].sort(reverse = True)
     if len(hiragana[x]) is 0:continue
     c = x
     for _, z in hiragana[x]:
-        c += ',%s'%z
+        c += ',(%s %s)'%(z, _[1])
     inverse.write(c + '\n')
