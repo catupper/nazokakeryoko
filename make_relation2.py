@@ -1,8 +1,9 @@
 #-*- coding:utf-8 -*-
 import MeCab
-
+import CaboCha
 words = open("word_list.txt", "r")
 sentences = open("wiki.txt", "r")
+#sentences = open("jawiki/jawiki-latest-pages-articles.xml-%03d.txt"%47, "r")
 blackf = open("black_list.txt", "r")
 relations = open("relation.csv", "w")
 inverse = open("inverse.csv", "w")
@@ -10,7 +11,7 @@ inverse = open("inverse.csv", "w")
 word_list = set()
 
 tagger = MeCab.Tagger('')
-
+c = CaboCha.Parser()
 relation = {}
 hiragana = {}
 
@@ -52,14 +53,11 @@ def base(node):
     return tagger.parseToNode(it).next
         
 
-teach = tagger.parseToNode("この文は助詞の例を作るのが目的")
-x = []
-while teach:
-    x.append((teach.surface, teach.feature))
-    teach = teach.next
-WA = x[3]
-WO = x[7]
-GA = x[10]
+teach = c.parse("この文は助詞の例を作るのが目的")
+
+WA = teach.token(2).feature
+WO = teach.token(6).feature
+GA = teach.token(9).feature
 
 #文章解析
 #「が」「は」「を」で挟まれた２つをつなぐ
@@ -71,22 +69,33 @@ for sentenceses in sentences:
     p += 1
     if(p % 1000 == 0):print p
     for sentence in sentenceses.split('。'):
-        node = tagger.parseToNode(sentence)
+        tree = c.parse(sentence)
+
         r = []
+        pp = []
+        for x in xrange(tree.token_size()):
+            pp.append(x)
+            node = tagger.parseToNode(tree.token(x).feature.split(',')[6]).next
+            r.append((node.surface, node.feature))
+            if tree.token(x).chunk == None:
+                pp[-1] = pp[-2]
+            
+        for x in xrange(tree.token_size()):
+            try:
+                if(tree.token(x).feature == WA):
+                    link_to = pp[x] - 1 + tree.chunk(tree.token(pp[x]).chunk.link).head_pos
+                    add_point(r[x - 1], r[link_to])
+            except:
+                pass
 
-        while node:
-            tnode = base(node)
-            r.append((tnode.surface, tnode.feature))
-            node = node.next
-
-        
+"""        
         for i, word in enumerate(r):
             if word == WA:
                 try:
                     add_point(r[i - 1], r[i + 1])
                 except:
                     pass
-            
+"""         
 
 print "pya2"
 #A -> A'作成
