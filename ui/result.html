@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang = "jp">
+<head>
+<meta charset="utf-8" />
+<title> NazoKake</title>
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="snowfall.jquery.js"></script>
+<link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+
+
+<!--
+<script type="text/javascript">
+$(document).snowfall({
+ flakeCount: 100,
+ flakeIndex: 99999,
+ maxSpeed: 5,
+ minSpeed: 1,
+ maxSize: 20,
+ minSize: 1,
+ image: 'sakura.png'
+});
+</script>  
+-->
+
+<div id="main">
+  <div id="nazo" class="form">
+      <p><input type="text" value="%s" readonly="readonly"><span class="twice">と</span></p>
+    <p class="twice">かけまして</p>
+  </div>
+  <div id="kake" class="form">
+      <p><input type="text" value="%s" readonly="readonly"><span class="twice">と</span></p>
+    <p class="twice">解く</p>
+  </div>
+  <div id="kokoro" class="form">
+      <p class="triple">その心は</p>
+    <p class="twice left">どちらも</p>
+    <p><input type="text" value="%s" readonly="readonly"></p>
+    <p class="twice">でしょう</p>
+  </div>
+  </div>
+</div>
+</html>

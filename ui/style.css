@@ -29,10 +29,18 @@ div#main {
     margin-top:50px;
 }
 
+.twice{
+    font-size:200%;
+}
+
 p.twice{
     margin-top:-10px;
+<<<<<<< HEAD
     font-size:300%;
     margin-left:570px;
+=======
+    margin-left:600px;
+>>>>>>> origin/yingtai
 }
 
 p.triple{
