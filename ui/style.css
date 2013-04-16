@@ -7,6 +7,8 @@ body{
 div#main {
         margin: 0 auto;
         width: 940px;
+	left: 200px;
+	position: absolute;
 }
 
 .form{
@@ -35,12 +37,8 @@ div#main {
 
 p.twice{
     margin-top:-10px;
-<<<<<<< HEAD
     font-size:300%;
     margin-left:570px;
-=======
-    margin-left:600px;
->>>>>>> origin/yingtai
 }
 
 p.triple{
@@ -66,5 +64,3 @@ p.left{
 #kokoro input{
     border-color:rgb(255, 191, 0) ;
 }
-
-

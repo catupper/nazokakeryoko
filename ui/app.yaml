@@ -3,7 +3,15 @@ version: 1
 runtime: python
 api_version: 1
 
-
 handlers:
 - url: /
-  static_dir: index.html
+  static_files: index.html
+  upload: index.html
+
+- url: /(.*\.(png|jpg|css|js))
+  static_files: \1
+  upload: (.*\.(png|jpg|css|js))
+  
+
+- url: /Nazo.py
+  script: Nazo.py

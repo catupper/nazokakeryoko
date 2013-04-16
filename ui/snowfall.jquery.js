@@ -47,7 +47,7 @@
 			this.step = 0,
 			this.stepSize = random(1,10) / 100;
 			var angle = Math.round(Math.random()*360);
-		    var flakeMarkup = "<img src='sakura.png' id='flake-" + this.id;
+		    var flakeMarkup = "<img src='sakura.png' clear='all' id='flake-" + this.id;
 flakeMarkup += "' style='width: " + this.size + "px; height: " + this.size + "px;";
 flakeMarkup += "; position: absolute; top: " + this.y + "px; left:" + this.x + "px; font-size: 0px; z-index: " + options.flakeIndex;
 flakeMarkup += "; -moz-transform:rotate(" + angle + "deg);";

@@ -21,12 +21,19 @@ black = []
 for x in blackf:
     black += [tagger.parseToNode(x.strip()).next.feature.split(',')[-1]]
 
+def jiritu(x):
+    return x[0] == '名詞' or x[1] == '自立'
+
 def add_point(x, y):
     x = x[0].strip().split(',')[0]
     if x not in relation:
         return
+    if not jiritu(x[0].strip().split(',')):
+        return 
     yomi = y[1].strip().split(',')[8]
     reals = y[1].strip().split(',')[6]
+    if not jiritu(y[0].strip().split(',')):
+        return
     y = y[0].strip().split(',')[0]
     if yomi in black:
         return

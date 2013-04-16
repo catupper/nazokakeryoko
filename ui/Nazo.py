@@ -67,16 +67,15 @@ def make_map():
     f.close()
 
 def solve(word):
-    print word
     if word not in relation:
-        return (word, choice(relation), "よくわかりません")
+        return (word, choice(relation.keys()), "よくわかりません")
     for x in xrange(1000):
         wordR = choice(relation[word]).strip('()').split()
         if len(wordR[0]) < 9:continue
         res = choice(inverse[wordR[0]]).strip('()').split()
         if res[0] != word and res[1] != wordR[1]:
-            return (wrod, res[0], wordR[0])
-    return (word, choice(relation), "よくわかりません")
+            return (word, res[0], wordR[0] +"(%s, %s)"%(res[1], wordR[1]))
+    return (word, choice(relation.keys()), "よくわかりません")
 
 
 import cgi
@@ -84,7 +83,8 @@ import cgi
 def main():
     make_map()
     f = cgi.FieldStorage()
-    txt = f.getfirst('text', '')
-    print html%solve(txt)
+    txt = f.getfirst('nazo', '')
+    p = solve(txt)
+    print html%(p[0], p[1], p[2])
 
 main()
