@@ -29,10 +29,14 @@ def add_point(x, y):
     
     yomi = y[1].strip().split(',')[8]
 <<<<<<< HEAD
+<<<<<<< HEAD
     reals = y[1].strip().split(',')[6]
     if(y[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):return
     y = y[0].strip().split(',')[0]
     if yomi in black:
+=======
+    if(y[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):
+>>>>>>> parent of 3c3fced... add ui
 =======
     if(y[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):
 >>>>>>> parent of 3c3fced... add ui

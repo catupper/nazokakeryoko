@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from os import system 
 for x in xrange(1, 183):
     system("python make_relation.py %d"%x)
@@ -19,6 +20,21 @@ inverse = open("inverse.csv", "w")
 =======
 tagger = MeCab.Tagger('')
 
+=======
+import MeCab
+import CaboCha
+words = open("word_list.txt", "r")
+sentences = open("wiki.txt", "r")
+#sentences = open("jawiki/jawiki-latest-pages-articles.xml-%03d.txt"%47, "r")
+blackf = open("black_list.txt", "r")
+relations = open("relation.csv", "w")
+inverse = open("inverse.csv", "w")
+
+word_list = set()
+
+tagger = MeCab.Tagger('')
+c = CaboCha.Parser()
+>>>>>>> parent of 3c3fced... add ui
 =======
 import MeCab
 import CaboCha
@@ -76,6 +92,7 @@ def base(node):
         
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 teach = tagger.parseToNode("この文は助詞の例を作るのが目的")
 x = []
 while teach:
@@ -85,11 +102,16 @@ WA = x[3]
 WO = x[7]
 GA = x[10]
 =======
+=======
+>>>>>>> parent of 3c3fced... add ui
 teach = c.parse("この文は助詞の例を作るのが目的")
 
 WA = teach.token(2).feature
 WO = teach.token(6).feature
 GA = teach.token(9).feature
+<<<<<<< HEAD
+>>>>>>> parent of 3c3fced... add ui
+=======
 >>>>>>> parent of 3c3fced... add ui
 
 #文章解析
@@ -103,6 +125,7 @@ for sentenceses in sentences:
     if(p % 1000 == 0):print p
     for sentence in sentenceses.split('。'):
 <<<<<<< HEAD
+<<<<<<< HEAD
         node = tagger.parseToNode(sentence)
         r = []
 
@@ -113,6 +136,8 @@ for sentenceses in sentences:
 
         
 =======
+=======
+>>>>>>> parent of 3c3fced... add ui
         tree = c.parse(sentence)
 
         r = []
@@ -133,6 +158,9 @@ for sentenceses in sentences:
                 pass
 
 """        
+<<<<<<< HEAD
+>>>>>>> parent of 3c3fced... add ui
+=======
 >>>>>>> parent of 3c3fced... add ui
         for i, word in enumerate(r):
             if word == WA:
@@ -141,7 +169,11 @@ for sentenceses in sentences:
                 except:
                     pass
 <<<<<<< HEAD
+<<<<<<< HEAD
             
+=======
+"""         
+>>>>>>> parent of 3c3fced... add ui
 =======
 """         
 >>>>>>> parent of 3c3fced... add ui
@@ -170,6 +202,9 @@ for x in hiragana:
         c += ',(%s %s)'%(z, _[1])
     inverse.write(c + '\n')
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of 7802e01... use CaboChaO
+=======
+>>>>>>> parent of 3c3fced... add ui
 =======
 >>>>>>> parent of 3c3fced... add ui
