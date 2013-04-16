@@ -29,9 +29,12 @@ div#main {
     margin-top:50px;
 }
 
+.twice{
+    font-size:200%;
+}
+
 p.twice{
     margin-top:-10px;
-    font-size:300%;
     margin-left:600px;
 }
 
