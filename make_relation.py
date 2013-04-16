@@ -27,11 +27,13 @@ for x in blackf:
     black += [tagger.parseToNode(x.strip()).next.feature.split(',')[-1]]
 
 def add_point(x, y):
+    if(x[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):return
     x = x[0].strip().split(',')[0]
     if x not in relation:
         return
     yomi = y[1].strip().split(',')[8]
     reals = y[1].strip().split(',')[6]
+    if(y[1].strip().split(',')[0] != '名詞' or y[1].strip().split(',')[1] != '自立'):return
     y = y[0].strip().split(',')[0]
     if yomi in black:
         return
