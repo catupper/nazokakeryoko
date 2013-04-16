@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+body{
+    background:url('washi01.jpg') no-repeat;
+}
+
+div#main {
+        margin: 0 auto;
+        width: 940px;
+}
+
+.form{
+    margin-left: 120px;
+}
+
+#ask{
+    margin-top:250px;
+}
+
+#nazo{
+    margin-top:100px;
+}
+
+#kake{
+    margin-top:50px;
+}
+
+#kokoro{
+    margin-top:50px;
+}
+
+p.twice{
+    margin-top:-10px;
+    font-size:300%;
+    margin-left:600px;
+}
+
+p.triple{
+    margin-top: -20px;
+    margin-bottom: 50px;
+    font-size: 400%;
+}
+
+p.left{
+    margin-left: 0px;
+}
+
+#kokoro input{
+    margin-top:-20px;
+}
+
+.form input{
+    font-size: 200%;
+    width: 700px;
+    border: medium rgb(131, 22, 92) solid;
+}
+
+#kokoro input{
+    border-color:rgb(255, 191, 0) ;
+}
+
+
