@@ -8,7 +8,11 @@ def make_map():
     for x in f:
         x = x.strip().split(',')
 <<<<<<< HEAD
+<<<<<<< HEAD
         relation[x[0]] = x[1:100]
+=======
+        relation[x[0]] = x[1:]
+>>>>>>> parent of 5cb8e9c... change glaph
 =======
         relation[x[0]] = x[1:]
 >>>>>>> parent of 5cb8e9c... change glaph
@@ -17,7 +21,11 @@ def make_map():
     for x in f:
         x = x.strip().split(',')
 <<<<<<< HEAD
+<<<<<<< HEAD
         inverse[x[0]] = x[1:100]
+=======
+        inverse[x[0]] = x[1:]
+>>>>>>> parent of 5cb8e9c... change glaph
 =======
         inverse[x[0]] = x[1:]
 >>>>>>> parent of 5cb8e9c... change glaph
