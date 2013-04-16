@@ -65,7 +65,7 @@ GA = x[10]
 
 p = 0
 for sentenceses in sentences:
-    p += 10
+    p += 1
     if(p % 1000 == 0):
         print p
     for sentence in sentenceses.split('。'):
@@ -76,7 +76,6 @@ for sentenceses in sentences:
             tnode = base(node)
             r.append((tnode.surface, tnode.feature))
             node = node.next
-
         
         for i, word in enumerate(r):
             if word == WA:
