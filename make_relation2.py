@@ -25,14 +25,15 @@ def jiritu(x):
     return x[0] == '名詞' or x[1] == '自立'
 
 def add_point(x, y):
+    if not jiritu(x[1].strip().split(',')):
+        return 
     x = x[0].strip().split(',')[0]
     if x not in relation:
         return
-    if not jiritu(x[0].strip().split(',')):
-        return 
+
     yomi = y[1].strip().split(',')[8]
     reals = y[1].strip().split(',')[6]
-    if not jiritu(y[0].strip().split(',')):
+    if not jiritu(y[1].strip().split(',')):
         return
     y = y[0].strip().split(',')[0]
     if yomi in black:
@@ -42,7 +43,6 @@ def add_point(x, y):
 
     if yomi not in relation[x]:
         relation[x][yomi] = [0, reals]
-
     relation[x][yomi][0] += 1
 
 for x in words:
