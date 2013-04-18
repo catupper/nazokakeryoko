@@ -21,8 +21,18 @@ black = []
 for x in blackf:
     black += [tagger.parseToNode(x.strip()).next.feature.split(',')[-1]]
 
+aaaaa = set()
+
+nounbl = set()
+nounbl.add('副詞可能')
+nounbl.add('接尾')
+nounbl.add('接続詞的')
+nounbl.add('固有名詞')
+nounbl.add('数')
 def jiritu(x):
-    return x[0] == '名詞' or x[1] == '自立'
+    if(x[0] == '名詞'):
+        aaaaa.add(x[1])
+    return (x[0] == '名詞' or x[1] == '自立' )and x[1] not in nounbl 
 
 def add_point(x, y):
     if not jiritu(x[1].strip().split(',')):
@@ -36,7 +46,7 @@ def add_point(x, y):
     if not jiritu(y[1].strip().split(',')):
         return
     y = y[0].strip().split(',')[0]
-    if yomi in black:
+    if reals in black:
         return
     if len(yomi) < 9:
         return
@@ -116,3 +126,5 @@ for x in hiragana:
         c += ',(%s %s)'%(z, _[1])
     inverse.write(c + '\n')
 
+for x in list(aaaaa):
+    print x
