@@ -34,6 +34,7 @@ def jiritu(x):
         aaaaa.add(x[1])
     return (x[0] == '名詞' or x[1] == '自立' )and x[1] not in nounbl 
 
+
 def add_point(x, y):
     if not jiritu(x[1].strip().split(',')):
         return 
@@ -46,7 +47,7 @@ def add_point(x, y):
     if not jiritu(y[1].strip().split(',')):
         return
     y = y[0].strip().split(',')[0]
-    if reals in black:
+    if yomi in black:
         return
     if len(yomi) < 9:
         return
@@ -62,7 +63,7 @@ for x in words:
 
 #動詞を基本形に変換
 def base(node):
-    if node.feature.split(',')[0] != "動詞":return node   
+    if node.feature.split(',')[0] != "動詞" and node.feature.split(',')[0] != "形容詞":return node   
     it = node.feature.split(',')[6]
     return tagger.parseToNode(it).next        
 
