@@ -34,6 +34,12 @@ $(document).snowfall({
 </script>  
 -->
 
+<script type="text/javascript">
+  document.onkeydown = function(e){
+   location.href="../";
+  }
+</script>
+
 <div id="main">
   <div id="nazo" class="form">
       <p><input type="text" value="%s" readonly="readonly"><span class="twice">と</span></p>

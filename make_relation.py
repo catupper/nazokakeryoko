@@ -2,7 +2,6 @@
 import MeCab
 import CaboCha
 
-
 words = open("word_list.txt", "r")
 sentences = open("smallwiki.txt", "r")
 blackf = open("black_list.txt", "r")
@@ -23,15 +22,37 @@ black = []
 for x in blackf:
     black += [tagger.parseToNode(x.strip()).next.feature.split(',')[-1]]
 
+aaaaa = set()
+
+nounbl = set()
+nounbl.add('副詞可能')
+nounbl.add('接尾')
+nounbl.add('接続詞的')
+nounbl.add('固有名詞')
+nounbl.add('数')
 def jiritu(x):
-    return x[0] == '名詞' or x[1] == '自立'
+    if(x[0] == '名詞'):
+        aaaaa.add(x[1])
+    return (x[0] == '名詞' or x[1] == '自立' )and x[1] not in nounbl 
+
+
+#動詞を基本形に変換
+def base(node):
+    if node.feature.split(',')[0] != "動詞" and node.feature.split(',')[0] != "形容詞":return node   
+    it = node.feature.split(',')[6]
+    return tagger.parseToNode(it).next        
+
 
 def add_point(x, y):
+    x = base(x)
+    y = base(y)
+    print x[0], y[0]
     if not jiritu(x[1].strip().split(',')):
         return 
     x = x[0].strip().split(',')[0]
     if x not in relation:
         return
+
     yomi = y[1].strip().split(',')[8]
     reals = y[1].strip().split(',')[6]
     if not jiritu(y[1].strip().split(',')):
@@ -51,21 +72,17 @@ for x in words:
     word_list.add(x)
     relation[x] = {}
 
-#動詞を基本形に変換
-def base(node):
-    if node.feature.split(',')[0] != "動詞":return node   
-    it = node.feature.split(',')[6]
-    return tagger.parseToNode(it).next        
 
-teach = tagger.parseToNode("この文は助詞の例を作るのが目的")
+teach = tagger.parseToNode("この文とは助詞の例を作るのが目的")
 x = []
 while teach:
     x.append((teach.surface, teach.feature))
     teach = teach.next
 
-WA = x[3]
-WO = x[7]
-GA = x[10]
+TO = x[3]
+WA = x[4]
+WO = x[8]
+GA = x[11]
 
 #文章解析
 #「が」「は」「を」で挟まれた２つをつなぐ
@@ -78,21 +95,31 @@ for sentenceses in sentences:
         print p
     for sentence in sentenceses.split('。'):
         tree = c.parse(sentence)
-        r = []
-        
-        for x in xrange(tree.chunk_size()):
+        node = tagger.parseToNode(sentence)
+
+        for x in xrange(tree.chunk_size() - 1):
             try:
-                g = tree.chunk(x)
-                if g.link < 0 :continue
-                a = tree.token(g.token_pos + g.head_pos).feature.split(',')[6]
-                a = base(tagger.parseToNode(a).next)
-                f = tree.chunk(g.link)
-                b = tree.token(f.token_pos + f.func_pos).feature.split(',')[6]
-                b = base(tagger.parseToNode(b).next)
-                add_point((a.surface, a.feature), (b.surface, b.feature))
-            except:
+                if tree.token(x).feature == TO[1] and tree.token(x + 1).feature == WA[1]:
+                    start = 0
+                    for y in xrange(x, -1, -1):
+                        if tree.token(y).chunk:
+                            start = y
+                            break
+                    destination = tree.chunk(start).link
+                    real_destination = 0
+                    for y in xrange(x, -1, -1):
+                        if tree.token(y).chunk:
+                            if tree.token(y).chunk.link == destination:
+                                real_destination = y
+                    if real_destination == x:
+                        real_destination = destination
+                    real_destination = tree.chunk(real_destination).token_pos
+                    start = tree.chunk(start).token_pos
+                    start = (tree.token(start).feature.split(',')[6], tree.token(start).feature)
+                    real_destination = (tree.token(real_destination).feature.split(',')[6], tree.token(real_destination).feature.split(',')[6])
+                    add_point(start, real_destination)
+            except: 
                 pass
-            
 
 print "pya2"
 #A -> A'作成
@@ -118,3 +145,5 @@ for x in hiragana:
         c += ',(%s %s)'%(z, _[1])
     inverse.write(c + '\n')
 
+for x in list(aaaaa):
+    print x

@@ -67,15 +67,16 @@ def base(node):
     it = node.feature.split(',')[6]
     return tagger.parseToNode(it).next        
 
-teach = tagger.parseToNode("この文は助詞の例を作るのが目的")
+teach = tagger.parseToNode("この文とは助詞の例を作るのが目的")
 x = []
 while teach:
     x.append((teach.surface, teach.feature))
     teach = teach.next
 
-WA = x[3]
-WO = x[7]
-GA = x[10]
+TO = x[3]
+WA = x[4]
+WO = x[8]
+GA = x[11]
 
 #文章解析
 #「が」「は」「を」で挟まれた２つをつなぐ
@@ -96,11 +97,11 @@ for sentenceses in sentences:
             node = node.next
         
         for i, word in enumerate(r):
-            if word == WA:
-                try:
-                    add_point(r[i - 1], r[i + 1])
-                except:
-                    pass
+            try:
+                if word == WA and r[i - 1] == TO:
+                    add_point(r[i - 2], r[i + 1])
+            except:
+                pass
             
 
 print "pya2"
