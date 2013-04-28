@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = "jp">
+<head>
+<meta charset="utf-8" />
+<title> NazoKake</title>
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="snowfall.jquery.js"></script>
+<link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+
+
+<!--
+<script type="text/javascript">
+$(document).snowfall({
+ flakeCount: 100,
+ flakeIndex: 99999,
+ maxSpeed: 5,
+ minSpeed: 1,
+ maxSize: 20,
+ minSize: 1,
+ image: 'sakura.png'
+});
+</script>  
+-->
+
+<script type="text.javascript">
+  document.onkeydown = function(e){
+   location.href="../";
+  }
+</script>
+
+<div id="main">
+  <form method="post" action="answer.py" class="answer">
+      <p><input type="text" value="%s" readonly="readonly"><span class="twice">は</span><input type="text" value="%s" readonly="readonly" class="kokoro">ですか？</p>
+      <input type="radio" name="q1" value="YES,%s,%s" class="radio" checked="checked"><span class="twice">はい</span>
+      <input type="radio" name="q1" value="NO,%s,%s" class="radio"><span class="twice">いいえ</span>
+      <p><input type="text" value="%s" readonly="readonly"><span class="twice">は</span><input type="text" value="%s" readonly="readonly" class="kokoro">ですか？</p>
+      <input type="radio" name="q2" value="YES,%s,%s" class="radio" checked="checked"><span class="twice">はい</span>
+      <input type="radio" name="q2" value="NO,%s,%s" class="radio"><span class="twice">いいえ</span>
+  <p><input type="submit" value="投稿" class="bt"></p>
+  </form>
+</div>
+
+
+</html>

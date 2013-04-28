@@ -1,4 +1,4 @@
-application: myapp
+application: nazokakeryoko
 version: 1
 runtime: python
 api_version: 1
@@ -10,8 +10,16 @@ handlers:
 
 - url: /(.*\.(png|jpg|css|js))
   static_files: \1
-  upload: (.*\.(png|jpg|css|js))
-  
+  upload: (.*\.(png|jpg|css|js))  
 
 - url: /Nazo.py
   script: Nazo.py
+
+- url: /Set.py
+  script: Set.py
+
+- url: /answer.py
+  script: answer.py
+
+- url: /set_db
+  script: set_db.py

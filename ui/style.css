@@ -61,6 +61,23 @@ p.left{
     border: medium rgb(131, 22, 92) solid;
 }
 
+.answer input.radio{
+    font-size: 200%;
+}
+
+.answer input:not(.bt){
+    font-size: 200%;
+    width: 200px;
+    border: medium rgb(131, 22, 92) solid;
+}
+.answer input.kokoro{
+    border-color:rgb(255, 191, 0) ;
+}
+
 #kokoro input{
     border-color:rgb(255, 191, 0) ;
+}
+
+#botton{
+    margin-left: 120px;
 }

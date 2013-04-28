@@ -27,11 +27,6 @@ $(document).snowfall({
 </script>  
 -->
 
-<script type="text.javascript">
-  document.onkeydown = function(e){
-   location.href="../";
-  }
-</script>
 
 <div id="main">
   <div id="nazo" class="form">
@@ -46,8 +41,13 @@ $(document).snowfall({
       <p class="triple">その心は</p>
     <p class="twice left">どちらも</p>
     <p><input type="text" value="%s" readonly="readonly"></p>
-    <p class="twice">でしょう</p>
+      <p class="twice">でしょう</p>
   </div>
+  <div id="botton">
+    <form action="Set.py" method="post">
+      <button type="submit" name="grade" value="YES,%s,%s,%s">うまい！</button>
+      <button type="submit" name="grade" value="NO,%s,%s,%s"> うまくない</button>
+    </form>
   </div>
 </div>
 </html>

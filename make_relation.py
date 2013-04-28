@@ -44,8 +44,6 @@ def base(node):
 
 
 def add_point(x, y):
-    x = base(x)
-    y = base(y)
     print x[0], y[0]
     if not jiritu(x[1].strip().split(',')):
         return 
@@ -100,14 +98,16 @@ for sentenceses in sentences:
         for x in xrange(tree.chunk_size() - 1):
             try:
                 if tree.token(x).feature == TO[1] and tree.token(x + 1).feature == WA[1]:
+                    print sentence
                     start = 0
                     for y in xrange(x, -1, -1):
                         if tree.token(y).chunk:
                             start = y
                             break
                     destination = tree.chunk(start).link
+                    print tree.token(tree.chunk(destination).token_pos).feature
                     real_destination = 0
-                    for y in xrange(x, -1, -1):
+                    for y in xrange(destination, -1, -1):
                         if tree.token(y).chunk:
                             if tree.token(y).chunk.link == destination:
                                 real_destination = y

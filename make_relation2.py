@@ -23,6 +23,8 @@ for x in blackf:
 
 aaaaa = set()
 
+hiraganas = "あ,い,う,え,お,か,き,く,け,こ,さ,し,す,せ,そ,た,ち,つ,て,と,な,に,ぬ,ね,の,は,ひ,ふ,へ,ほ,ま,み,む,め,も,や,ゆ,よ,わ,を,ん,ら,り,る,れ,ろ,が,ぎ,ぐ,げ,ご,ざ,じ,ず,ぜ,ぞ,だ,ぢ,づ,で,ど,ば,び,ぶ,べ,ぼ,ぱ,ぴ,ぷ,ぺ,ぽ,ぁ,ぃ,ぅ,ぇ,ぉ,ゃ,ゅ,ょ,っ".split(',')
+
 nounbl = set()
 nounbl.add('副詞可能')
 nounbl.add('接尾')
@@ -35,6 +37,7 @@ def jiritu(x):
     return (x[0] == '名詞' or x[1] == '自立' )and x[1] not in nounbl 
 
 
+
 def add_point(x, y):
     if not jiritu(x[1].strip().split(',')):
         return 
@@ -44,6 +47,7 @@ def add_point(x, y):
 
     yomi = y[1].strip().split(',')[8]
     reals = y[1].strip().split(',')[6]
+            
     if not jiritu(y[1].strip().split(',')):
         return
     y = y[0].strip().split(',')[0]
@@ -53,6 +57,11 @@ def add_point(x, y):
         return
 
     if yomi not in relation[x]:
+        tmpre = reals
+        for xz in hiraganas:
+            tmpre = tmpre.replace(xz, '')      
+        if tmpre == '':
+            return
         relation[x][yomi] = [0, reals]
     relation[x][yomi][0] += 1
 
@@ -98,11 +107,14 @@ for sentenceses in sentences:
         
         for i, word in enumerate(r):
             try:
-                if word == WA and r[i - 1] == TO:
-                    add_point(r[i - 2], r[i + 1])
+                if word in(WA, GA, WO):
+                    add_point(r[i - 1], r[i + 1])
             except:
                 pass
             
+
+relation_file = open("relation.sv", "w")
+relation_file.write(repr(relation))
 
 print "pya2"
 #A -> A'作成
@@ -118,6 +130,8 @@ for x in word_list:
         hiragana[z] += [(point, x)]
     relations.write(c + '\n')
 print "here"
+
+
 
 #A' -> A作成
 for x in hiragana:
