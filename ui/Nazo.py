@@ -17,7 +17,6 @@ def solve(word):
     if(word == ""):
         return ["1"]*5
     relapplicants = [x for x in Dictionary.gql("WHERE filename = :relationcsv AND word=:searching", relationcsv="relation.csv", searching=word.decode('utf-8'))]
-    print len(relapplicants)
     if(len(relapplicants) == 0):
         return [""]*5
     relapplicants = relapplicants[0]
