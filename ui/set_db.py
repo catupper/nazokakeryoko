@@ -9,6 +9,7 @@ class Dictionary(db.Model):
     content = db.TextProperty()
     
 x = f.getfirst("filename", "")
+if x not in ['relation_all.csv', 'inverse_all.csv']:x = "relation_all.csv"
 f = open(x, "r")
 for line in f:
     try:
