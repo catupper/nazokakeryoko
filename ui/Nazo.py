@@ -21,6 +21,8 @@ def solve(word):
         return [""]*5
     relapplicants = relapplicants[0]
     relation = relapplicants.content.encode('utf-8').split(',')
+    if(relation != [] and relation[0] == ""):
+        return [""]*5
     for x in xrange(1000):
         wordR = choice(relation).strip('()').split()
         if len(wordR[0]) < 9:continue

@@ -94,7 +94,7 @@ GA = x[11]
 p = 0
 for sentenceses in sentences:
     p += 1
-    if(p % 1000 == 0):
+    if(p % 10000 == 0):
         print p
     for sentence in sentenceses.split('。'):
         node = tagger.parseToNode(sentence)
@@ -128,19 +128,43 @@ for x in word_list:
         if z not in hiragana:
             hiragana[z] = []
         hiragana[z] += [(point, x)]
-    relations.write(c + '\n')
+
 print "here"
 
 
-
+oks = set()
+okh = set()
 #A' -> A作成
 for x in hiragana:
     hiragana[x].sort(reverse = True)
     if len(hiragana[x]) is 0:continue
+    p = set()
+    for _, z in hiragana[x]:
+        p.add(_[1])
+    if len(p) is 1:continue
     c = x
+    okh.add(x)
     for _, z in hiragana[x]:
         c += ',(%s %s)'%(z, _[1])
+        oks.add(z)
     inverse.write(c + '\n')
 
-for x in list(aaaaa):
-    print x
+
+
+print "pya2"
+#A -> A'作成
+for x in word_list:
+    c = x 
+    if x not in oks:continue
+    if len(relation[x][:100]) == 0:continue
+    ooo = False
+    for z,point in relation[x][:100]:
+        if z in okh:
+            ooo = True
+            break
+    if not ooo:continue
+    for z, point in relation[x][:100]:
+        if z in okh:
+            c += ',(%s %s)'%(z, point[1])
+    relations.write(c + '\n')
+
